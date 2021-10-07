@@ -20,5 +20,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('authentication.urls')),
     path('api/gigs/', include('gigs.urls')),
+    path('api/fans/', include('fans.urls')),
+    path('api/musicians/', include('musicians.urls')),
+    path('api/reviews/', include('reviews.urls')),
+    path('api/rsvps/', include('rsvps.urls')),
+
+
     
 ]
