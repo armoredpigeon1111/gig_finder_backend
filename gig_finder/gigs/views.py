@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -35,6 +36,38 @@ class GigIndividual(APIView):
 
 class GigDelete(APIView):        
     def delete(self, request, pk):
-        comment = Gig.objects.filter(pk = pk)
-        comment.delete()
+        gig = Gig.objects.filter(pk = pk)
+        gig.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)  
+
+class GigLike(APIView):
+    def get_object(self, pk):
+        try:
+            return Gig.objects.get(pk = pk)
+        except Gig.DoesNotExist:
+            raise Http404
+
+    def patch(self, request, pk):
+        gig = self.get_object(pk)
+        data = {"likes": gig.likes + int(1)}
+        serializer = GigSerializer(gig, data=data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+
+class GigUpdate(APIView):
+    def get_object(self, pk):
+        try:
+            return Gig.objects.get(pk = pk)
+        except Gig.DoesNotExist:
+            raise Http404
+
+
+    def patch(self, request, pk):
+        gig = self.get_object(pk)
+        serializer = GigSerializer(gig, data=request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)       
