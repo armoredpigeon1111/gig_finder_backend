@@ -10,3 +10,4 @@ class Gig(models.Model):
     state = models.CharField(max_length=50)
     zipcode = models.IntegerField()
     likes = models.IntegerField()
+    dateTime = models.DateTimeField()
