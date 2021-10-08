@@ -134,3 +134,4 @@ except ImportError:
     pass
 
 AUTH_USER_MODEL = 'accounts.User'
+
