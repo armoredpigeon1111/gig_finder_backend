@@ -16,3 +16,9 @@ class ReviewList(APIView):
         reviews = Review.objects.all()
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
+
+class ReviewIndividual(APIView):
+    def get(self, request, gig_id):
+        review = Review.objects.filter(gig_id = gig_id)
+        serializer = ReviewSerializer(review, many=True)
+        return Response(serializer.data)

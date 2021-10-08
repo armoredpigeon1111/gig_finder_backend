@@ -3,5 +3,6 @@ from rsvps import views
 
 
 urlpatterns = [
-    path('', views.RSVPList.as_view())
+    path('', views.RSVPList.as_view()),
+    path('<int:fan_id>', views.RSVPFan.as_view())
 ]

@@ -16,3 +16,9 @@ class GigList(APIView):
         gigs = Gig.objects.all()
         serializer = GigSerializer(gigs, many=True)
         return Response(serializer.data)
+
+class GigIndividual(APIView):
+    def get(self, request, pk):
+        gig = Gig.objects.filter(pk = pk)
+        serializer = GigSerializer(gig, many=True)
+        return Response(serializer.data)

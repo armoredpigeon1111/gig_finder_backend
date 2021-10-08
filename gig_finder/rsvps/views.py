@@ -16,3 +16,9 @@ class RSVPList(APIView):
         rsvps = RSVP.objects.all()
         serializer = RSVPSerializer(rsvps, many=True)
         return Response(serializer.data)
+
+class RSVPFan(APIView):
+    def get(self, request, fan_id):
+        rsvp = RSVP.objects.filter(fan_id = fan_id)
+        serializer = RSVPSerializer(rsvp, many=True)
+        return Response(serializer.data)

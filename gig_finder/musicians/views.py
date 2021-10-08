@@ -16,3 +16,9 @@ class MusicianList(APIView):
         musicians = Musician.objects.all()
         serializer = MusicianSerializer(musicians, many=True)
         return Response(serializer.data)
+
+class MusicianIndividual(APIView):
+    def get(self, request, user_id):
+        musician = Musician.objects.filter(user_id = user_id)
+        serializer = MusicianSerializer(musician, many=True)
+        return Response(serializer.data)
