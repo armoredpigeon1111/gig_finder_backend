@@ -21,31 +21,24 @@ class FanList(APIView):
         fans = Fan.objects.all()
         serializer = FanSerializer(fans, many=True)
         return Response(serializer.data)
+
     
-    # def get(self, request, user_id):
-    #     fan = Fan.objects.filter(user_id = user_id)
-    #     serializer = FanSerializer(fan, many=True)
-    #     return Response(serializer.data)
+    def post(self, request):
+        serializer = FanSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-    # def post(self, request):
-    #     serializer = FanSerializer(data = request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+class FanIndividual(APIView):  
+    permission_classes = [IsAuthenticated]
 
-    # @api_view(['GET'])
-    # @permission_classes([AllowAny])
-    # def get(self, request):
-    #     fans = Fan.objects.all()
-    #     serializer = FanSerializer(fans, many=True)
-    #     return Response(serializer.data)
+    def get(self, request, user_id):
+        fan = Fan.objects.filter(user_id = user_id)
+        serializer = FanSerializer(fan, many=True)
+        return Response(serializer.data)
 
-    # @api_view(['POST'])
-    # @permission_classes([IsAuthenticated])
-    # def post(self, request):
-    #     serializer = FanSerializer(data = request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+
+
+
