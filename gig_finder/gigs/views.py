@@ -23,10 +23,18 @@ class GigList(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)        
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
+
+            
 
 class GigIndividual(APIView):
     def get(self, request, pk):
         gig = Gig.objects.filter(pk = pk)
         serializer = GigSerializer(gig, many=True)
         return Response(serializer.data)
+
+class GigDelete(APIView):        
+    def delete(self, request, pk):
+        comment = Gig.objects.filter(pk = pk)
+        comment.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)  
