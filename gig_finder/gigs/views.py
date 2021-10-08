@@ -10,12 +10,20 @@ User = get_user_model()
 
 class GigList(APIView):
 
-    permission_classes = [AllowAny]
+    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         gigs = Gig.objects.all()
         serializer = GigSerializer(gigs, many=True)
         return Response(serializer.data)
+
+    def post(self, request):
+        serializer = GigSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)        
 
 class GigIndividual(APIView):
     def get(self, request, pk):

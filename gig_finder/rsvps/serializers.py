@@ -5,4 +5,4 @@ from .models import RSVP
 class RSVPSerializer(serializers.ModelSerializer):
     class Meta:
         model = RSVP
-        fields = ['id', 'fan_id', 'gig_id']
+        fields = ['id', 'fan', 'gig']

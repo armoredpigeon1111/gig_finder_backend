@@ -10,12 +10,20 @@ User = get_user_model()
 
 class MusicianList(APIView):
 
-    permission_classes = [AllowAny]
+    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         musicians = Musician.objects.all()
         serializer = MusicianSerializer(musicians, many=True)
         return Response(serializer.data)
+
+    def post(self, request):
+        serializer = MusicianSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 class MusicianIndividual(APIView):
     def get(self, request, user_id):
