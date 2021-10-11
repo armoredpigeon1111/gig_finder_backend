@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'reviews',
     'rest_framework',
     'authentication.apps.AuthenticationConfig',
+    'corsheaders',
     
    
 ]
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'gig_finder.urls'
@@ -134,4 +136,6 @@ except ImportError:
     pass
 
 AUTH_USER_MODEL = 'accounts.User'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
