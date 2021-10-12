@@ -33,8 +33,8 @@ class FanList(APIView):
 class FanIndividual(APIView):  
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, user_id):
-        fan = Fan.objects.filter(user_id = user_id)
+    def get(self, request, id):
+        fan = Fan.objects.filter(id = id)
         serializer = FanSerializer(fan, many=True)
         return Response(serializer.data)
 
